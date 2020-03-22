@@ -104,7 +104,7 @@ class Logic(object):
     def run():
         try:
             Logic.kill()
-            command = ['/app/data/custom/launcher_ivViewer/files/run.sh' % package_name]
+            command = ['/app/data/custom/launcher_ivViewer/files/run.sh']
             #Util.execute_command(command)
             Logic.current_process = subprocess.Popen(cmd)
         except Exception as e: 
@@ -114,7 +114,7 @@ class Logic(object):
     @staticmethod
     def kill():
         try:
-            command = ['/app/data/custom/launcher_ivViewer/files/kill.sh' % package_name]
+            command = ['/app/data/custom/launcher_ivViewer/files/kill.sh']
             Util.execute_command(command)
             if Logic.current_process is not None and Logic.current_process.poll() is None:
                 import psutil
