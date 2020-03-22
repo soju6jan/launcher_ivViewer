@@ -107,6 +107,7 @@ class Logic(object):
             command = ['/app/data/custom/launcher_ivViewer/files/run.sh']
             #Util.execute_command(command)
             Logic.current_process = subprocess.Popen(command)
+            logger.debug('RUN............................')
         except Exception as e: 
             logger.error('Exception:%s', e)
             logger.error(traceback.format_exc())
