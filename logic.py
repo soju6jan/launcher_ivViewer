@@ -106,7 +106,7 @@ class Logic(object):
             Logic.kill()
             command = ['/app/data/custom/launcher_ivViewer/files/run.sh']
             #Util.execute_command(command)
-            Logic.current_process = subprocess.Popen(cmd)
+            Logic.current_process = subprocess.Popen(command)
         except Exception as e: 
             logger.error('Exception:%s', e)
             logger.error(traceback.format_exc())
