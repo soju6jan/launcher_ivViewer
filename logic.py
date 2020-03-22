@@ -169,7 +169,8 @@ class Logic(object):
                 ret = Util.execute_command(command)
                 command = ['git', '-C', php_path, 'pull']
                 ret = Util.execute_command(command)
-                return True
+            os.system("chmod 777 -R %s" % php_path)
+            return True
         except Exception as e: 
             logger.error('Exception:%s', e)
             logger.error(traceback.format_exc())
