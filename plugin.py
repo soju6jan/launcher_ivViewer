@@ -71,6 +71,7 @@ def home():
 def first_menu(sub): 
     if sub == 'setting':
         arg = ModelSetting.to_dict()
+        arg['package_name'] = package_name
         arg['status'] = str(Logic.current_process is not None)
         arg['is_installed'] = 'Installed' if Logic.is_installed() else 'Not Installed'
         return render_template('%s_%s.html' % (package_name, sub), arg=arg)
