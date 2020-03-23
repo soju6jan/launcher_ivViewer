@@ -31,6 +31,7 @@ class Logic(object):
     db_default = {
         'auto_start' : 'False',
         'url' : 'http://localhost:48000/ivViewer',
+        'path' : ''
     }
     current_process = None
 
