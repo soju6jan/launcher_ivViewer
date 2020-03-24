@@ -233,6 +233,7 @@ class Logic(object):
             if tmp:
                 os.system('rm -rf /www/ivViewer/data/naver')
                 os.system('ln -s %s /www/ivViewer/data/naver' % tmp[0])
+                os.system('chmod 777 -R /www/ivViewer/data/naver')
         except Exception as e: 
             logger.error('Exception:%s', e)
             logger.error(traceback.format_exc())
