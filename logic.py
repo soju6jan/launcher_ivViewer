@@ -12,7 +12,7 @@ import time
 # third-party
 
 # sjva 공용
-from framework import app, path_app_root, db
+from framework import app, path_app_root, db, path_data
 from framework.logger import get_logger
 from framework.util import Util
 
@@ -31,7 +31,7 @@ class Logic(object):
     db_default = {
         'auto_start' : 'False',
         'url' : 'http://localhost:48000/ivViewer',
-        'path' : ''
+        'toon_path' : ''
     }
     current_process = None
 
@@ -51,8 +51,11 @@ class Logic(object):
     def plugin_load():
         try:
             logger.debug('%s plugin_load', package_name)
-            Logic.git_pull()
+            tmp = os.path.join(path_data, 'ivViewer_metadata')
+            if not os.path.exists(tmp):
+                os.makedirs(tmp)
 
+            Logic.git_pull()
             if platform.system() != 'Windows':
                 custom = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'file')    
                 os.system("chmod 777 -R %s" % custom)
@@ -176,3 +179,54 @@ class Logic(object):
             logger.error('Exception:%s', e)
             logger.error(traceback.format_exc())
         return False
+
+    
+    @staticmethod
+    def git_pull_foreground():
+        try:
+            def func():
+                import system
+                php_path = '/www/ivViewer'
+                if os.path.exists(php_path):
+                    commands = [
+                        ['msg', u'잠시만 기다려주세요.'],
+                        [['git', '-C', php_path, 'reset', '--hard', 'HEAD']],
+                        [['git', '-C', php_path, 'pull']],
+                        [['chmod', '777', '-R', php_path]]
+                        ['msg', u'업데이트 완료되었습니다.']
+                    ]
+                else:
+                    commands = [['msg', u'먼저 설치하세요.']]
+                system.SystemLogicCommand.start('업데이트', commands)
+            t = threading.Thread(target=func, args=())
+            t.setDaemon(True)
+            t.start()
+        except Exception as e: 
+            logger.error('Exception:%s', e)
+            logger.error(traceback.format_exc())
+    
+    @staticmethod
+    def do_soft_link():
+        try:
+            tmp = ModelSetting.get_list('toon_path')
+            if tmp:
+                os.system('rm -rf /www/ivViewer/data/naver')
+                os.system('ln -s /www/ivViewer/data/naver %s' % tmp[0])
+        except Exception as e: 
+            logger.error('Exception:%s', e)
+            logger.error(traceback.format_exc())
+    
+    
+    @staticmethod
+    def get_version():
+        ret = {}
+        try:
+            import requests
+            ret['ret'] = True
+            ret['data'] = requests.get('%s/version.php' % ModelSetting.get('url')).content
+        except Exception as e: 
+            logger.error('Exception:%s', e)
+            logger.error(traceback.format_exc())
+            ret['ret'] = False
+            ret['data'] = str(e)
+        return ret

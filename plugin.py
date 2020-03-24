@@ -86,6 +86,7 @@ def ajax(sub):
     try:
         if sub == 'setting_save':
             ret = ModelSetting.setting_save(request)
+            Logic.do_soft_link()
             return jsonify(ret)
         elif sub == 'status':
             todo = request.form['todo']
@@ -104,7 +105,11 @@ def ajax(sub):
             return jsonify(ret)
         elif sub == 'install':
             Logic.install()
-            ret = {}
+            return jsonify({})
+        elif sub == 'version_check':
+            return jsonify(Logic.get_version())
+        elif sub == 'update':
+            Logic.git_pull_foreground()
             return jsonify({})
     except Exception as e: 
         logger.error('Exception:%s', e)

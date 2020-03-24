@@ -6,10 +6,12 @@
   <form id='setting' name='setting'>
     {{ macros.setting_checkbox('auto_start', '시작시 자동실행', value=arg['auto_start'], desc=['On : 시작시 자동으로 실행합니다.']) }}
     {{ macros.setting_input_text_and_buttons('url', 'URL', [['go_btn', 'GO']], value=arg['url'], desc=['포트 : 48000', '디폴트 계정 ivuser / ivpass']) }}
+    {{ macros.setting_input_textarea('toon_path', '웹툰경로', value=arg['toon_path'], desc=['웹툰 경로. 구분자 | 또는 엔터', '현재는 첫번째 경로만 지원']) }}
     {{ macros.setting_button([['global_setting_save_btn', '저장']]) }}
   </form>    
     {{ macros.m_hr()}}
-    {{ macros.info_text_and_buttons('is_installed', '설치상태', [['install_btn', '설치']], value=arg['is_installed']) }}    
+    {{ macros.info_text_and_buttons('is_installed', '설치상태', [['install_btn', '설치']], value=arg['is_installed']) }}
+    {{ macros.setting_button([['version_check_btn', '버전확인'], ['update_btn', '업데이트']], 'ivViewer') }}
 </div>
 
 <script type="text/javascript">
@@ -64,5 +66,41 @@ function do_install() {
     }
   });
 }
+
+$("body").on('click', '#version_check_btn', function(e){
+  e.preventDefault();
+  $.ajax({
+    url: '/' + package_name + '/ajax/version_check',
+    type: "POST", 
+    cache: false,
+    data:{},
+    dataType: "json",
+    success: function (data) {
+      if (data.ret) {
+        $.notify('<strong>버전 : '+ data.data+'</strong>', {
+          type: 'success'
+        });
+      } else {
+        $.notify('<strong>실패 : ' + data.data + '</strong>', {
+          type: 'warning'
+        });
+      }
+    }
+  });
+});
+
+$("body").on('click', '#update_btn', function(e){
+  e.preventDefault();
+  $.ajax({
+    url: '/' + package_name + '/ajax/update',
+    type: "POST", 
+    cache: false,
+    data:{},
+    dataType: "json",
+    success: function (data) {
+      command_modal_show('업데이트')
+    }
+  });
+});
 </script>    
 {% endblock %}
