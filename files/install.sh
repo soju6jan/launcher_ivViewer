@@ -10,4 +10,5 @@ apk add php7-mbstring php7-fileinfo php7-session
 mv /app/data/custom/launcher_ivViewer/files/php.ini /etc/php7
 cd /www
 git clone https://github.com/tvj030728/ivViewer
+mkdir /www/ivViewer/data
 ln -s /app/data/ivViewer_metadata /www/ivViewer/metadata
