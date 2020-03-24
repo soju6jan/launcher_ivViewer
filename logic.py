@@ -54,6 +54,7 @@ class Logic(object):
             tmp = os.path.join(path_data, 'ivViewer_metadata')
             if not os.path.exists(tmp):
                 os.makedirs(tmp)
+                os.system('chmod 777 -R %s' % tmp)
 
             Logic.git_pull()
             if platform.system() != 'Windows':
