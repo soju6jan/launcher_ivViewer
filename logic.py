@@ -190,9 +190,9 @@ class Logic(object):
                 if os.path.exists(php_path):
                     commands = [
                         ['msg', u'잠시만 기다려주세요.'],
-                        [['git', '-C', php_path, 'reset', '--hard', 'HEAD']],
-                        [['git', '-C', php_path, 'pull']],
-                        [['chmod', '777', '-R', php_path]],
+                        ['git', '-C', php_path, 'reset', '--hard', 'HEAD'],
+                        ['git', '-C', php_path, 'pull'],
+                        ['chmod', '777', '-R', php_path],
                         ['msg', u'업데이트 완료되었습니다.']
                     ]
                 else:
