@@ -232,7 +232,7 @@ class Logic(object):
             tmp = ModelSetting.get_list('toon_path')
             if tmp:
                 os.system('rm -rf /www/ivViewer/data/naver')
-                os.system('ln -s %s /www/ivViewer/data/naver' % tmp[0])
+                os.system('ln -s "%s" /www/ivViewer/data/naver' % tmp[0])
                 os.system('chmod 777 -R /www/ivViewer/data/naver')
         except Exception as e: 
             logger.error('Exception:%s', e)
