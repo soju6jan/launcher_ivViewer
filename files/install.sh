@@ -12,3 +12,4 @@ cd /www
 git clone https://github.com/tvj030728/ivViewer
 mkdir /www/ivViewer/data
 ln -s /app/data/ivViewer_metadata /www/ivViewer/metadata
+chmod 777 -R /www/ivViewer
