@@ -152,6 +152,26 @@ class Logic(object):
         except Exception as e: 
             logger.error('Exception:%s', e)
             logger.error(traceback.format_exc())
+    
+
+    @staticmethod
+    def uninstall():
+        try:
+            def func():
+                import system
+                Logic.kill()
+                commands = [
+                    ['msg', u'잠시만 기다려주세요.'],
+                    ['/app/data/custom/launcher_ivViewer/files/uninstall.sh'],
+                    ['msg', u'삭제가 완료되었습니다.']
+                ]
+                system.SystemLogicCommand.start('삭제', commands)
+            t = threading.Thread(target=func, args=())
+            t.setDaemon(True)
+            t.start()
+        except Exception as e: 
+            logger.error('Exception:%s', e)
+            logger.error(traceback.format_exc())
 
     @staticmethod
     def is_installed():

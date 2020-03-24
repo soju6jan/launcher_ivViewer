@@ -106,6 +106,9 @@ def ajax(sub):
         elif sub == 'install':
             Logic.install()
             return jsonify({})
+        elif sub == 'uninstall':
+            Logic.uninstall()
+            return jsonify({})
         elif sub == 'version_check':
             return jsonify(Logic.get_version())
         elif sub == 'update':

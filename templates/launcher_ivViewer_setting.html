@@ -10,7 +10,7 @@
     {{ macros.setting_button([['global_setting_save_btn', '저장']]) }}
   </form>    
     {{ macros.m_hr()}}
-    {{ macros.info_text_and_buttons('is_installed', '설치상태', [['install_btn', '설치']], value=arg['is_installed']) }}
+    {{ macros.info_text_and_buttons('is_installed', '설치상태', [['install_btn', '설치'], ['uninstall_btn', '삭제']], value=arg['is_installed']) }}
     {{ macros.setting_button([['version_check_btn', '버전확인'], ['update_btn', '업데이트']], 'ivViewer') }}
 </div>
 
@@ -99,6 +99,20 @@ $("body").on('click', '#update_btn', function(e){
     dataType: "json",
     success: function (data) {
       command_modal_show('업데이트')
+    }
+  });
+});
+
+$("body").on('click', '#uninstall_btn', function(e){
+  e.preventDefault();
+  $.ajax({
+    url: '/' + package_name + '/ajax/uninstall',
+    type: "POST", 
+    cache: false,
+    data:{},
+    dataType: "json",
+    success: function (data) {
+      command_modal_show('삭제')
     }
   });
 });
