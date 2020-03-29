@@ -58,7 +58,7 @@ class Logic(object):
 
             Logic.git_pull()
             if platform.system() != 'Windows':
-                custom = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'file')    
+                custom = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'files')    
                 os.system("chmod 777 -R %s" % custom)
 
             # DB 초기화 
@@ -121,6 +121,8 @@ class Logic(object):
     def kill():
         try:
             command = ['/app/data/custom/launcher_ivViewer/files/kill.sh']
+            if not os.path.exists(command[0]):
+                return
             Util.execute_command(command)
             if Logic.current_process is not None and Logic.current_process.poll() is None:
                 import psutil
@@ -194,6 +196,8 @@ class Logic(object):
                 ret = Util.execute_command(command)
                 command = ['git', '-C', php_path, 'pull']
                 ret = Util.execute_command(command)
+            else:
+                return
             os.system("chmod 777 -R %s" % php_path)
             return True
         except Exception as e: 
