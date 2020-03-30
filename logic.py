@@ -254,7 +254,7 @@ class Logic(object):
             for t in tmp:
                 name = os.path.basename(t)
                 os.system('rm -rf /www/ivViewer/data/%s' % name)
-                os.system('ln -s "%s" /www/ivViewer/data/%s' % (t, name)
+                os.system('ln -s "%s" /www/ivViewer/data/%s' % (t, name))
                 os.system('chmod 777 -R /www/ivViewer/data/%s' % name)
         except Exception as e: 
             logger.error('Exception:%s', e)
