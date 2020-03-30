@@ -6,7 +6,7 @@
   <form id='setting' name='setting'>
     {{ macros.setting_checkbox('auto_start', '시작시 자동실행', value=arg['auto_start'], desc=['On : 시작시 자동으로 실행합니다.']) }}
     {{ macros.setting_input_text_and_buttons('url', 'URL', [['go_btn', 'GO']], value=arg['url'], desc=['포트 : 48000', '디폴트 계정 ivuser / ivpass']) }}
-    {{ macros.setting_input_textarea('toon_path', '웹툰경로', value=arg['toon_path'], desc=['웹툰 경로. 구분자 | 또는 엔터', '현재는 첫번째 경로만 지원']) }}
+    {{ macros.setting_input_textarea('toon_path', '웹툰경로', value=arg['toon_path'], desc=['웹툰 경로. 구분자 | 또는 엔터']) }}
     {{ macros.setting_button([['global_setting_save_btn', '저장']]) }}
   </form>    
     {{ macros.m_hr()}}

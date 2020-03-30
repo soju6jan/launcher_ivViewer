@@ -29,6 +29,7 @@ from datetime import datetime
 
 class Logic(object):
     db_default = {
+        'db_version' : '1',  #추후 2로 변경
         'auto_start' : 'False',
         'url' : 'http://localhost:48000/ivViewer',
         'toon_path' : ''
@@ -42,6 +43,7 @@ class Logic(object):
                 if db.session.query(ModelSetting).filter_by(key=key).count() == 0:
                     db.session.add(ModelSetting(key, value))
             db.session.commit()
+            Logic.migration()
         except Exception as e: 
             logger.error('Exception:%s', e)
             logger.error(traceback.format_exc())
@@ -99,6 +101,21 @@ class Logic(object):
         try:
             Logic.kill()
         except Exception as e: 
+            logger.error('Exception:%s', e)
+            logger.error(traceback.format_exc())
+
+    @staticmethod
+    def migration():
+        try:
+            db_version = ModelSetting.get('db_version')
+            if ModelSetting.get('db_version') == '1':
+                tmp = os.path.join(path_data, 'ivViewer_metadata', 'titles')
+                if os.path.exists(tmp):
+                    import shutil
+                    shutil.rmtree(tmp)
+                ModelSetting.set('db_version', '2')
+                db.session.flush()
+        except Exception as e:
             logger.error('Exception:%s', e)
             logger.error(traceback.format_exc())
 
@@ -234,10 +251,11 @@ class Logic(object):
     def do_soft_link():
         try:
             tmp = ModelSetting.get_list('toon_path')
-            if tmp:
-                os.system('rm -rf /www/ivViewer/data/naver')
-                os.system('ln -s "%s" /www/ivViewer/data/naver' % tmp[0])
-                os.system('chmod 777 -R /www/ivViewer/data/naver')
+            for t in tmp:
+                name = os.path.basename(t)
+                os.system('rm -rf /www/ivViewer/data/%s' % name)
+                os.system('ln -s "%s" /www/ivViewer/data/%s' % (t, name)
+                os.system('chmod 777 -R /www/ivViewer/data/%s' % name)
         except Exception as e: 
             logger.error('Exception:%s', e)
             logger.error(traceback.format_exc())
