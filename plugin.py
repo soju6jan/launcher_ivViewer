@@ -85,8 +85,9 @@ def first_menu(sub):
 def ajax(sub):
     try:
         if sub == 'setting_save':
+            old = ModelSetting.get_list('toon_path')
             ret = ModelSetting.setting_save(request)
-            Logic.do_soft_link()
+            Logic.do_soft_link(old)
             return jsonify(ret)
         elif sub == 'status':
             todo = request.form['todo']

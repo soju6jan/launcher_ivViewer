@@ -248,14 +248,25 @@ class Logic(object):
             logger.error(traceback.format_exc())
     
     @staticmethod
-    def do_soft_link():
+    def do_soft_link(old):
         try:
+            for t in old:
+                try:
+                    name = os.path.basename(t)
+                    os.system('rm -rf /www/ivViewer/data/%s' % name)
+                except Exception as e: 
+                    logger.error('Exception:%s', e)
+                    logger.error(traceback.format_exc())
+
             tmp = ModelSetting.get_list('toon_path')
             for t in tmp:
-                name = os.path.basename(t)
-                os.system('rm -rf /www/ivViewer/data/%s' % name)
-                os.system('ln -s "%s" /www/ivViewer/data/%s' % (t, name))
-                os.system('chmod 777 -R /www/ivViewer/data/%s' % name)
+                try:
+                    name = os.path.basename(t)
+                    os.system('ln -s "%s" /www/ivViewer/data/%s' % (t, name))
+                    os.system('chmod 777 -R /www/ivViewer/data/%s' % name)
+                except Exception as e: 
+                    logger.error('Exception:%s', e)
+                    logger.error(traceback.format_exc())
         except Exception as e: 
             logger.error('Exception:%s', e)
             logger.error(traceback.format_exc())
