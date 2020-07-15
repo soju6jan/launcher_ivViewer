@@ -252,8 +252,10 @@ class Logic(object):
         try:
             for t in old:
                 try:
-                    name = os.path.basename(t)
-                    os.system('rm -rf /www/ivViewer/data/%s' % name)
+                    name = os.path.basename(t).strip()
+                    logger.debug(name)
+                    if name != '':
+                        os.system('rm -rf /www/ivViewer/data/%s' % name)
                 except Exception as e: 
                     logger.error('Exception:%s', e)
                     logger.error(traceback.format_exc())
