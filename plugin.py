@@ -38,11 +38,11 @@ def plugin_unload():
 
 plugin_info = {
     'version' : '0.1.0.0',
-    'name' : '웹툰뷰어(ivViewer)',
+    'name' : u'웹툰뷰어(ivViewer)',
     'category_name' : 'launcher',
     'icon' : '',
-    'developer' : 'ivlis',
-    'description' : '도커만 지원합니다.',
+    'developer' : u'ivlis',
+    'description' : u'도커만 지원합니다.',
     'home' : 'https://github.com/soju6jan/launcher_ivViewer',
     'more' : '',
     'running_type' : ['docker']
@@ -51,9 +51,9 @@ plugin_info = {
 
 # 메뉴 구성.
 menu = {
-    'main' : [package_name, '웹툰뷰어(ivViewer)'],
+    'main' : [package_name, u'웹툰뷰어(ivViewer)'],
     'sub' : [
-        ['setting', '설정'], ['log', '로그']
+        ['setting', u'설정'], ['log', u'로그']
     ], 
     'category' : 'launcher',
 }  
